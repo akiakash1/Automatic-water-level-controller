@@ -52,9 +52,83 @@ In this circuit Ultrasonic sensor module is placed at the top of bucket (water t
 
 ## PROGRAM:
 
+#include <LiquidCrystal.h> </br>
+#define trigger 10 </br>
+#define echo 11 </br>
+#define motor 8 </br>
+#define buzzer 12 </br>
+#define led1 9 </br>
+#define led2 13 </br>
+#define led3 1 </br>
+LiquidCrystal lcd(7,6,5,4,3,2); </br>
+float time=0,distance=0; int </br>
+temp=0; void setup() </br>
+{
+lcd.begin(16,2); </br>
+pinMode(trigger,OUTPUT); </br>
+pinMode(echo,INPUT); pinMode(motor, </br>
+OUTPUT); pinMode(buzzer, OUTPUT); </br>
+pinMode(led1, OUTPUT); </br>
+pinMode(led2, OUTPUT); </br>
+pinMode(led3, OUTPUT); </br>
+} </br>
+void loop() </br>
+{ lcd.clear(); </br>
+digitalWrite(trigger,LOW); </br>
+delayMicroseconds(2); </br>
+digitalWrite(trigger,HIGH); </br>
+delayMicroseconds(10); </br>
+digitalWrite(trigger,LOW); </br>
+delayMicroseconds(2); </br>
+time=pulseIn(echo,HIGH); </br>
+distance=time*340/20000; </br>
+lcd.clear(); </br>
+lcd.print("AWL CONTROL"); </br>
+delay(2000); if(distance<500); </br>
+{ </br>
+digitalWrite(motor, LOW); </br>
+digitalWrite(led1, HIGH); </br>
+lcd.clear(); lcd.print("Water </br>
+Tank Full "); </br>
+lcd.setCursor(0,1); </br>
+lcd.print("Motor Turned </br>
+OFF"); delay(5000); </br>
+digitalWrite(led1, LOW); </br>
+} </br>
+else if(distance>500 && distance<750) </br>
+{ </br>
+digitalWrite(motor, LOW); </br>
+digitalWrite(led2, HIGH); </br>
+lcd.clear(); lcd.print("Water Tank </br>
+Full "); lcd.setCursor(0,1); </br>
+lcd.print("Motor Turned OFF"); </br>
+delay(5000); digitalWrite(led2, </br>
+LOW); </br>
+} </br>
+
+else if(distance>750) </br>
+{ </br>
+ digitalWrite(motor, HIGH); </br>
+ digitalWrite(buzzer, HIGH); </br>
+ digitalWrite(led3, HIGH); </br>
+ lcd.clear(); lcd.print("LOW </br>
+ Water Level"); </br>
+ lcd.setCursor(0,1); </br>
+ lcd.print("Motor Turned ON"); </br>
+ delay(5000); </br>
+ digitalWrite(buzzer, LOW); </br>
+ digitalWrite(led3, LOW); </br>
+} </br>
+}
+
 ## CIRCUIT DIAGRAM:
 
+![image](https://github.com/akiakash1/Automatic-water-level-controller/assets/132885484/049278cd-fb3f-498f-b89f-9e60831b1d2b)
+
 ## OUTPUT:
+
+![image](https://github.com/akiakash1/Automatic-water-level-controller/assets/132885484/113f5f73-a112-43ea-98c3-3106659bfe95)
+
 
 ## RESULT:
 Thus the water level of the tank was monitored and controlled using Arduino UNO controller.
